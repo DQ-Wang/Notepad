@@ -1,0 +1,52 @@
+/* 根面板整体风格 */
+.root {
+    -fx-font-family: "Microsoft YaHei UI", "Segoe UI", sans-serif;
+    -fx-background-color: #f8f8f8;
+}
+
+/* 菜单栏 */
+.menu-bar {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #dcdcdc;
+    -fx-border-width: 0 0 1 0;
+}
+
+/* 菜单项悬停样式 */
+.menu:hover {
+    -fx-background-color: #e6f0ff;
+}
+
+/* 文本区域样式 */
+.text-area {
+    -fx-control-inner-background: white;
+    -fx-font-size: 14px;
+    -fx-text-fill: black;
+    -fx-highlight-fill: #aad4ff; /* 蓝色选中 */
+    -fx-highlight-text-fill: black;
+    -fx-border-color: #dcdcdc;
+    -fx-border-radius: 2;
+}
+
+/* 滚动条样式（可选简化） */
+.scroll-bar:vertical, .scroll-bar:horizontal {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #c0c0c0;
+    -fx-background-insets: 0;
+    -fx-background-radius: 3;
+}
+
+/* 状态栏样式 */
+#statusBar {
+    -fx-background-color: #f0f0f0;
+    -fx-padding: 5;
+    -fx-border-color: #dcdcdc;
+    -fx-border-width: 1 0 0 0;
+}
+
+.label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #333;
+}

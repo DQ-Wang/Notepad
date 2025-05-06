@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.HBox?>
+
+<BorderPane fx:controller="NotepadController"  stylesheets="@Notepad.css" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="文件">
+            <items>
+              <MenuItem mnemonicParsing="false" text="新建(N)" accelerator="Ctrl+N" onAction="#newFile"/>
+              <MenuItem mnemonicParsing="false" text="新建窗口(W)" accelerator="Ctrl+Shift+N" onAction="#newWindow"/>
+              <MenuItem mnemonicParsing="false" text="打开(O)..." accelerator="Ctrl+O" onAction="#openFile"/>
+              <MenuItem mnemonicParsing="false" text="保存(S)" accelerator="Ctrl+S" onAction="#saveFile"/>
+              <MenuItem mnemonicParsing="false" text="另存为(A)..." onAction="#saveAsFile"/>
+              <MenuItem mnemonicParsing="false" text="页面设置(U)..."/>
+              <MenuItem mnemonicParsing="false" text="打印(P)..."/>
+              <MenuItem mnemonicParsing="false" text="退出(X)" accelerator="Ctrl+Q" onAction="#exitApp"/>
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="编辑">
+            <items>
+              <MenuItem mnemonicParsing="false" text="撤销" accelerator="Ctrl+Z" onAction="#undo"/>
+              <MenuItem mnemonicParsing="false" text="重做" accelerator="Ctrl+Y" onAction="#redo"/>
+              <MenuItem mnemonicParsing="false" text="剪切" accelerator="Ctrl+X" onAction="#cut"/>
+              <MenuItem mnemonicParsing="false" text="复制" accelerator="Ctrl+C" onAction="#copy"/>
+              <MenuItem mnemonicParsing="false" text="粘贴" accelerator="Ctrl+V" onAction="#paste"/>
+              <MenuItem mnemonicParsing="false" fx:id="deleteMenuItem" text="删除" accelerator="Delete" onAction="#delete"/>
+              <MenuItem mnemonicParsing="false" text="使用 Bing 搜索(S)..."/>
+              <MenuItem mnemonicParsing="false" text="查找" accelerator="Ctrl+F" onAction="#find"/>
+              <MenuItem mnemonicParsing="false" text="查找下一个" accelerator="F3" onAction="#findNext"/>
+              <MenuItem mnemonicParsing="false" text="查找上一个" onAction="#findPrevious"/>
+              <MenuItem mnemonicParsing="false" text="替换" accelerator="Ctrl+H" onAction="#replace"/>
+              <MenuItem mnemonicParsing="false" text="转到" accelerator="Ctrl+G" onAction="#goTo"/>
+              <MenuItem mnemonicParsing="false" text="全选" accelerator="Ctrl+A" onAction="#selectAll"/>
+              <MenuItem mnemonicParsing="false" text="日期/时间" onAction="#insertDateTime"/>
+              <MenuItem mnemonicParsing="false" text="字体" onAction="#setFont"/>
+
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="查看">
+            <items>
+                <Menu mnemonicParsing="false" text="缩放(Z)">
+                  <items>
+                    <MenuItem mnemonicParsing="false" onAction="#zoomIn" text="放大(I)" accelerator="Ctrl+加号" />
+                    <MenuItem mnemonicParsing="false" onAction="#zoomOut" text="缩小(O)"  accelerator="Ctrl+减号"/>
+                    <MenuItem mnemonicParsing="false" onAction="#resetZoom" text="恢复默认缩放" />
+                  </items>
+                </Menu>
+                <MenuItem fx:id="statusBarMenuItem" mnemonicParsing="false" onAction="#toggleStatusBar" text="状态栏" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+  <center>
+    <TextArea fx:id="textArea" prefHeight="200.0" prefWidth="200.0" wrapText="true" BorderPane.alignment="CENTER" />
+  </center>
+  <bottom>
+    <HBox fx:id="statusBar" alignment="CENTER_LEFT" spacing="10.0" style="-fx-background-color: #f0f0f0; -fx-padding: 5;">
+      <padding>
+        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+      </padding>
+      <Label fx:id="lineColumnLabel" text="行 1, 列 1" />
+      <Label fx:id="characterCountLabel" alignment="CENTER" text="0 字符" HBox.hgrow="ALWAYS" />
+      <Label fx:id="zoomLabel" text="100%" />
+    </HBox>
+  </bottom>
+</BorderPane>
