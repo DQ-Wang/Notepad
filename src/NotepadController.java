@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
@@ -23,6 +24,7 @@ public class NotepadController {
     @FXML private HBox statusBar; // 底部状态栏
     @FXML private MenuItem statusBarMenuItem; // “状态栏”菜单项
     @FXML private MenuItem deleteMenuItem;//在控制器中引入该组件，方便后续设置禁用
+    @FXML private AnchorPane findPanel;
 
     // 当前缩放比例，初始为 1.0（即 100%）
     private double zoomFactor = 1.0;
@@ -247,9 +249,14 @@ public class NotepadController {
 
     @FXML
     private void find() {
-        String content=textArea.getText();
+        findPanel.setVisible(true);
 
 
+    }
+
+    @FXML
+    public void closeFindPanel() {
+        findPanel.setVisible(false);
     }
 
     @FXML
