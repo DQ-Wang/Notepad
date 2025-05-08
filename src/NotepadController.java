@@ -1,10 +1,14 @@
+import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
@@ -23,6 +27,8 @@ public class NotepadController {
     @FXML private HBox statusBar; // 底部状态栏
     @FXML private MenuItem statusBarMenuItem; // “状态栏”菜单项
     @FXML private MenuItem deleteMenuItem;//在控制器中引入该组件，方便后续设置禁用
+    @FXML private AnchorPane findPanel;
+    @FXML private AnchorPane updatePanel;
 
     // 当前缩放比例，初始为 1.0（即 100%）
     private double zoomFactor = 1.0;
@@ -63,7 +69,7 @@ public class NotepadController {
         characterCountLabel.setText(text.length() + " 个字符");
     }
 
-    @FXML private void newFile() {
+    @FXML private void newFile(ActionEvent event) {
         //如果文件被修改，提示用户保存
         if(isModified){
             Alert alert=new Alert(Alert.AlertType.CONFIRMATION);
@@ -91,7 +97,8 @@ public class NotepadController {
         textArea.clear();
         currentFile=null;
         isModified=false;
-        getStage().setTitle("无标题-记事本");
+        Stage stage=getStage(event);
+        stage.setTitle("无标题-记事本");
         lineColumnLabel.setText("行 1, 列 1");
         characterCountLabel.setText("0 个字符");
 
@@ -114,14 +121,15 @@ public class NotepadController {
 
     }
 
-    @FXML private void openFile() {//BUfferedReader和StringBuilder提高性能
+    @FXML private void openFile(ActionEvent event) {//BUfferedReader和StringBuilder提高性能
         // 创建文件选择器
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("打开文件");
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("文本文件", "*.txt")//只允许选择txt文件
         );
-        File file = fileChooser.showOpenDialog(getStage());
+//        Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
+        File file = fileChooser.showOpenDialog(getStage(event));
         if (file != null) {
             try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
                 StringBuilder content = new StringBuilder();//创建StingBuilder对象，用于构建文件内容
@@ -139,6 +147,16 @@ public class NotepadController {
 
     private Stage getStage() {
         return (Stage) textArea.getScene().getWindow();//获取当前窗口，传入到文件选择器中
+    }
+
+    private Stage getStage(Event event) {
+        if (event.getSource() instanceof Node) {
+            Node node = (Node) event.getSource();
+            if (node.getScene() != null) {
+                return (Stage) node.getScene().getWindow();
+            }
+        }
+        return null;
     }
 
     private void showAlert(String message) {
@@ -247,9 +265,15 @@ public class NotepadController {
 
     @FXML
     private void find() {
-        String content=textArea.getText();
+        findPanel.setVisible(true);
 
 
+    }
+
+    @FXML
+    public void closeFindPanel() {
+        findPanel.setVisible(false);
+        updatePanel.setVisible(false);
     }
 
     @FXML
@@ -264,8 +288,12 @@ public class NotepadController {
 
     @FXML
     private void replace() {
+        findPanel.setVisible(true);
+        updatePanel.setVisible(true);
 
     }
+
+
 
     @FXML
     private void goTo() {

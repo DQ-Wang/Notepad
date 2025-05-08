@@ -50,3 +50,20 @@
     -fx-font-size: 12px;
     -fx-text-fill: #333;
 }
+
+.text-field {
+
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 1px;
+    -fx-padding: 5px;
+}
+
+.search-panel {
+    -fx-background-color: #f0f0f0;
+    -fx-border-color: #ccc; /* 设置边框颜色为浅灰色，可根据需求调整 */
+    -fx-border-width: 1px; /* 设置边框宽度为 1 像素，可按需调整 */
+    -fx-border-style: solid; /* 边框样式为实线，也可尝试 dashed 等其他样式 */
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 10, 0, 0, 3); /* 添加阴影效果 */
+}
