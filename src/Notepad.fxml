@@ -11,62 +11,63 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.layout.VBox?>
 
 
 <?import javafx.scene.control.CheckMenuItem?>
 <BorderPane fx:controller="NotepadController" stylesheets="@Notepad.css" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
-   <top>
-      <MenuBar BorderPane.alignment="CENTER">
-        <menus>
-          <Menu mnemonicParsing="false" text="文件">
-            <items>
-              <MenuItem mnemonicParsing="false" text="新建(N)" accelerator="Ctrl+N" onAction="#newFile"/>
-              <MenuItem mnemonicParsing="false" text="新建窗口(W)" accelerator="Ctrl+Shift+N" onAction="#newWindow"/>
-              <MenuItem mnemonicParsing="false" text="打开(O)..." accelerator="Ctrl+O" onAction="#openFile"/>
-              <MenuItem mnemonicParsing="false" text="保存(S)" accelerator="Ctrl+S" onAction="#saveFile"/>
-              <MenuItem mnemonicParsing="false" text="另存为(A)..." onAction="#saveAsFile"/>
-              <MenuItem mnemonicParsing="false" text="页面设置(U)..."/>
-              <MenuItem mnemonicParsing="false" text="打印(P)..."/>
-              <MenuItem mnemonicParsing="false" text="退出(X)" accelerator="Ctrl+Q" onAction="#exitApp"/>
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="编辑">
-            <items>
-              <MenuItem mnemonicParsing="false" text="撤销" accelerator="Ctrl+Z" onAction="#undo"/>
-              <MenuItem mnemonicParsing="false" text="重做" accelerator="Ctrl+Y" onAction="#redo"/>
-              <MenuItem mnemonicParsing="false" text="剪切" accelerator="Ctrl+X" onAction="#cut"/>
-              <MenuItem mnemonicParsing="false" text="复制" accelerator="Ctrl+C" onAction="#copy"/>
-              <MenuItem mnemonicParsing="false" text="粘贴" accelerator="Ctrl+V" onAction="#paste"/>
-              <MenuItem mnemonicParsing="false" fx:id="deleteMenuItem" text="删除" accelerator="Delete" onAction="#delete"/>
-              <MenuItem mnemonicParsing="false" text="使用 Bing 搜索(S)..."/>
-              <MenuItem mnemonicParsing="false" text="查找" accelerator="Ctrl+F" onAction="#find"/>
-              <MenuItem mnemonicParsing="false" text="查找下一个" accelerator="F3" onAction="#findNext"/>
-              <MenuItem mnemonicParsing="false" text="查找上一个" onAction="#findPrevious"/>
-              <MenuItem mnemonicParsing="false" text="替换" accelerator="Ctrl+H" onAction="#replace"/>
-              <MenuItem mnemonicParsing="false" text="转到" accelerator="Ctrl+G" onAction="#goTo"/>
-              <MenuItem mnemonicParsing="false" text="全选" accelerator="Ctrl+A" onAction="#selectAll"/>
-              <MenuItem mnemonicParsing="false" text="日期/时间" onAction="#insertDateTime"/>
-              <MenuItem mnemonicParsing="false" text="字体" onAction="#setFont"/>
+  <top>
+    <MenuBar BorderPane.alignment="CENTER">
+      <menus>
+        <Menu mnemonicParsing="false" text="文件">
+          <items>
+            <MenuItem mnemonicParsing="false" text="新建(N)" accelerator="Ctrl+N" onAction="#newFile"/>
+            <MenuItem mnemonicParsing="false" text="新建窗口(W)" accelerator="Ctrl+Shift+N" onAction="#newWindow"/>
+            <MenuItem mnemonicParsing="false" text="打开(O)..." accelerator="Ctrl+O" onAction="#openFile"/>
+            <MenuItem mnemonicParsing="false" text="保存(S)" accelerator="Ctrl+S" onAction="#saveFile"/>
+            <MenuItem mnemonicParsing="false" text="另存为(A)..." onAction="#saveAsFile"/>
+            <MenuItem mnemonicParsing="false" text="页面设置(U)..."/>
+            <MenuItem mnemonicParsing="false" text="打印(P)..."/>
+            <MenuItem mnemonicParsing="false" text="退出(X)" accelerator="Ctrl+Q" onAction="#exitApp"/>
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="编辑">
+          <items>
+            <MenuItem mnemonicParsing="false" text="撤销" accelerator="Ctrl+Z" onAction="#undo"/>
+            <MenuItem mnemonicParsing="false" text="重做" accelerator="Ctrl+Y" onAction="#redo"/>
+            <MenuItem mnemonicParsing="false" text="剪切" accelerator="Ctrl+X" onAction="#cut"/>
+            <MenuItem mnemonicParsing="false" text="复制" accelerator="Ctrl+C" onAction="#copy"/>
+            <MenuItem mnemonicParsing="false" text="粘贴" accelerator="Ctrl+V" onAction="#paste"/>
+            <MenuItem mnemonicParsing="false" fx:id="deleteMenuItem" text="删除" accelerator="Delete" onAction="#delete"/>
+            <MenuItem mnemonicParsing="false" text="使用 Bing 搜索(S)..."/>
+            <MenuItem mnemonicParsing="false" text="查找" accelerator="Ctrl+F" onAction="#find"/>
+            <MenuItem mnemonicParsing="false" text="查找下一个" accelerator="F3" onAction="#findNext"/>
+            <MenuItem mnemonicParsing="false" text="查找上一个" onAction="#findPrevious"/>
+            <MenuItem mnemonicParsing="false"  text="替换" accelerator="Ctrl+H" onAction="#replace"/>
+            <MenuItem mnemonicParsing="false" text="转到" accelerator="Ctrl+G" onAction="#goTo"/>
+            <MenuItem mnemonicParsing="false" text="全选" accelerator="Ctrl+A" onAction="#selectAll"/>
+            <MenuItem mnemonicParsing="false" text="日期/时间" onAction="#insertDateTime"/>
+            <MenuItem mnemonicParsing="false" text="字体" onAction="#setFont"/>
 
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="查看">
-            <items>
-                <Menu mnemonicParsing="false" text="缩放(Z)">
-                  <items>
-                    <MenuItem mnemonicParsing="false" onAction="#zoomIn" text="放大(I)" accelerator="Ctrl+加号" />
-                    <MenuItem mnemonicParsing="false" onAction="#zoomOut" text="缩小(O)"  accelerator="Ctrl+减号"/>
-                    <MenuItem mnemonicParsing="false" onAction="#resetZoom" text="恢复默认缩放" />
-                  </items>
-                </Menu>
-                <MenuItem fx:id="statusBarMenuItem" mnemonicParsing="false" onAction="#toggleStatusBar" text="状态栏" />
-            </items>
-          </Menu>
-        </menus>
-      </MenuBar>
-   </top>
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="查看">
+          <items>
+            <Menu mnemonicParsing="false" text="缩放(Z)">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#zoomIn" text="放大(I)" accelerator="Ctrl+加号" />
+                <MenuItem mnemonicParsing="false" onAction="#zoomOut" text="缩小(O)"  accelerator="Ctrl+减号"/>
+                <MenuItem mnemonicParsing="false" onAction="#resetZoom" text="恢复默认缩放" />
+              </items>
+            </Menu>
+            <MenuItem fx:id="statusBarMenuItem" mnemonicParsing="false" onAction="#toggleStatusBar" text="状态栏" />
+          </items>
+        </Menu>
+      </menus>
+    </MenuBar>
+  </top>
   <center>
-
     <TextArea fx:id="textArea" prefHeight="200.0" prefWidth="200.0" wrapText="true" BorderPane.alignment="CENTER" />
   </center>
   <bottom>
@@ -79,25 +80,35 @@
       <Label fx:id="zoomLabel" text="100%" />
     </HBox>
   </bottom>
-  <center>
-    <AnchorPane fx:id="findPanel" visible="false" prefHeight="50.0" prefWidth="650.0" styleClass="search-panel">
-      <children>
-        <MenuBar layoutX="515.0" layoutY="15.0">
-          <menus>
-            <Menu mnemonicParsing="false" text="setting">
-              <items>
-                <CheckMenuItem mnemonicParsing="false" text="回绕" />
-                <CheckMenuItem mnemonicParsing="false" text="区分大小写" />
-              </items>
-            </Menu>
-          </menus>
-        </MenuBar>
-        <Button layoutX="452.0" layoutY="10.0" mnemonicParsing="false" text="上一个" />
-        <Button layoutX="582.0" layoutY="10.0" minWidth="31.0" mnemonicParsing="false" prefHeight="31.0"  text="退出" onAction="#closeFindPanel"/>
-        <Button layoutX="390.0" layoutY="10.0" mnemonicParsing="false" text="下一个" />
-        <Button layoutX="7.0" layoutY="10.0" minWidth="31.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="31.0" />
-        <TextField layoutX="69.0" layoutY="10.0" prefHeight="31.0" prefWidth="306.0" />
-      </children>
-    </AnchorPane>
-  </center>
+<!--  要实现像windows那样的悬浮查找框就必须得将AnchorPane直接作为BorderPane的子节点-->
+  <AnchorPane fx:id="findPanel" visible="false" style="-fx-background-color: lightgray; -fx-padding: 10;" layoutX="175.0" layoutY="25.0" AnchorPane.topAnchor="300.0" AnchorPane.leftAnchor="100.0">
+    <children>
+
+      <Button  layoutY="14.0" mnemonicParsing="false"  text="打开替换" onAction="#replace"/>
+      <TextField fx:id="findTextField" layoutX="65.0" layoutY="14.0" prefWidth="200.0" promptText="查找内容" />
+      <Button layoutX="300.0" layoutY="14.0"   mnemonicParsing="false" onAction="#findNext" text="查找下一个" />
+      <Button layoutX="400.0" layoutY="14.0" mnemonicParsing="false" onAction="#findPrevious" text="查找上一个" />
+      <MenuBar layoutX="500.0" layoutY="14.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="setting">
+            <items>
+              <CheckMenuItem mnemonicParsing="false" text="回绕" />
+              <CheckMenuItem mnemonicParsing="false" text="区分大小写" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <Button layoutX="596.0" layoutY="14.0" mnemonicParsing="false" onAction="#closeFindPanel" text="关闭" />
+    </children>
+  </AnchorPane>
+  <AnchorPane fx:id="updatePanel" visible="false" style="-fx-background-color: lightgray; -fx-padding: 10;" layoutX="175.0" layoutY="55.0" AnchorPane.topAnchor="300.0" AnchorPane.leftAnchor="100.0">
+    <children>
+
+
+      <TextField fx:id="updateTextField" layoutX="65.0" layoutY="14.0" prefWidth="200.0" promptText="替换内容" />
+      <Button layoutX="300.0" layoutY="14.0"   mnemonicParsing="false"  text="替换" />
+      <Button layoutX="400.0" layoutY="14.0" mnemonicParsing="false"  text="替换全部" />
+
+    </children>
+  </AnchorPane>
 </BorderPane>

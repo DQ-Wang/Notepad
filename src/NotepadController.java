@@ -28,6 +28,7 @@ public class NotepadController {
     @FXML private MenuItem statusBarMenuItem; // “状态栏”菜单项
     @FXML private MenuItem deleteMenuItem;//在控制器中引入该组件，方便后续设置禁用
     @FXML private AnchorPane findPanel;
+    @FXML private AnchorPane updatePanel;
 
     // 当前缩放比例，初始为 1.0（即 100%）
     private double zoomFactor = 1.0;
@@ -96,7 +97,8 @@ public class NotepadController {
         textArea.clear();
         currentFile=null;
         isModified=false;
-        getStage(event).setTitle("无标题-记事本");
+        Stage stage=getStage(event);
+        stage.setTitle("无标题-记事本");
         lineColumnLabel.setText("行 1, 列 1");
         characterCountLabel.setText("0 个字符");
 
@@ -271,6 +273,7 @@ public class NotepadController {
     @FXML
     public void closeFindPanel() {
         findPanel.setVisible(false);
+        updatePanel.setVisible(false);
     }
 
     @FXML
@@ -285,8 +288,12 @@ public class NotepadController {
 
     @FXML
     private void replace() {
+        findPanel.setVisible(true);
+        updatePanel.setVisible(true);
 
     }
+
+
 
     @FXML
     private void goTo() {
