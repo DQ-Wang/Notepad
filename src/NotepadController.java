@@ -28,7 +28,12 @@ public class NotepadController {
     @FXML private MenuItem statusBarMenuItem; // “状态栏”菜单项
     @FXML private MenuItem deleteMenuItem;//在控制器中引入该组件，方便后续设置禁用
     @FXML private AnchorPane findPanel;
+    @FXML private TextField findTextField;//查找写入框
     @FXML private AnchorPane updatePanel;
+    @FXML private CheckMenuItem caseSensitiveMenuItem;//查找区分大小写
+    @FXML private CheckMenuItem wrapCheckMenuItem;//查找是否回绕
+
+    private int lastFindIndex=-1;
 
     // 当前缩放比例，初始为 1.0（即 100%）
     private double zoomFactor = 1.0;
@@ -266,6 +271,8 @@ public class NotepadController {
     @FXML
     private void find() {
         findPanel.setVisible(true);
+        findTextField.requestFocus();//自动获取输入焦点
+        lastFindIndex=-1;//每次重新查找，重置索引
 
 
     }
@@ -275,15 +282,73 @@ public class NotepadController {
         findPanel.setVisible(false);
         updatePanel.setVisible(false);
     }
+//查找不到用户提供的关键词时的响应办法
+    private void showNotFoundAlert(String keyword) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, "未找到 \"" + keyword + "\"。");
+        alert.setHeaderText(null);
+        alert.show();
+    }
+
 
     @FXML
     private void findNext() {
+        String content = textArea.getText();
+        String keyword = findTextField.getText();
+        if (keyword.isEmpty()) return;
+        //判断是否勾选回绕或区分大小写
+        boolean caseSensitive = caseSensitiveMenuItem.isSelected();
+        boolean wrapEnabled = wrapCheckMenuItem.isSelected();
+        //根据所得结果将字符串统一格式
+        String searchContent = caseSensitive ? content : content.toLowerCase();
+        String searchKeyword = caseSensitive ? keyword : keyword.toLowerCase();
+
+        int start = textArea.getCaretPosition();
+        int index = searchContent.indexOf(searchKeyword, start);
+
+        if (index == -1 && wrapEnabled) {
+            // 回绕：从头开始再查一次
+            index = searchContent.indexOf(searchKeyword, 0);
+        }
+
+        if (index != -1) {
+            //找到关键词，定位光标
+            textArea.selectRange(index, index + keyword.length());
+            textArea.requestFocus();
+        } else {
+            //找不到
+            showNotFoundAlert(keyword);
+        }
 
     }
 
     @FXML
     private void findPrevious() {
+        String content = textArea.getText();
+        String keyword = findTextField.getText();
+        if (keyword.isEmpty()) return;
 
+        boolean caseSensitive = caseSensitiveMenuItem.isSelected();
+        boolean wrapEnabled = wrapCheckMenuItem.isSelected();
+
+        String searchContent = caseSensitive ? content : content.toLowerCase();
+        String searchKeyword = caseSensitive ? keyword : keyword.toLowerCase();
+
+        int start = textArea.getCaretPosition() - keyword.length() - 1;
+        if (start < 0) start = content.length();  // 位置靠前，查找从末尾
+
+        int index = searchContent.lastIndexOf(searchKeyword, start);//从start处往前查找
+
+        if (index == -1 && wrapEnabled) {
+            // 回绕：从末尾重新查找
+            index = searchContent.lastIndexOf(searchKeyword);
+        }
+
+        if (index != -1) {
+            textArea.selectRange(index, index + keyword.length());
+            textArea.requestFocus();
+        } else {
+            showNotFoundAlert(keyword);
+        }
     }
 
     @FXML

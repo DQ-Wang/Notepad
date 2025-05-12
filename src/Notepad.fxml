@@ -92,8 +92,8 @@
         <menus>
           <Menu mnemonicParsing="false" text="setting">
             <items>
-              <CheckMenuItem mnemonicParsing="false" text="回绕" />
-              <CheckMenuItem mnemonicParsing="false" text="区分大小写" />
+              <CheckMenuItem fx:id="wrapCheckMenuItem" mnemonicParsing="false" text="回绕" />
+              <CheckMenuItem fx:id="caseSensitiveMenuItem" mnemonicParsing="false" text="区分大小写" />
             </items>
           </Menu>
         </menus>
