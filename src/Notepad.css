@@ -1,6 +1,6 @@
 /* 根面板整体风格 */
 .root {
-    -fx-font-family: "Microsoft YaHei UI", "Segoe UI", sans-serif;
+
     -fx-background-color: #f8f8f8;
 }
 
@@ -19,7 +19,7 @@
 /* 文本区域样式 */
 .text-area {
     -fx-control-inner-background: white;
-    -fx-font-size: 14px;
+
     -fx-text-fill: black;
     -fx-highlight-fill: #aad4ff; /* 蓝色选中 */
     -fx-highlight-text-fill: black;

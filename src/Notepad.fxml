@@ -71,7 +71,7 @@
     <TextArea fx:id="textArea" prefHeight="200.0" prefWidth="200.0" wrapText="true" BorderPane.alignment="CENTER" />
   </center>
   <bottom>
-    <HBox fx:id="statusBar" alignment="CENTER_LEFT" spacing="10.0" style="-fx-background-color: #f0f0f0; -fx-padding: 5;">
+    <HBox fx:id="statusBar" visible="true" managed="true" alignment="CENTER_LEFT" spacing="10.0" style="-fx-background-color: #f0f0f0; -fx-padding: 5;">
       <padding>
         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
       </padding>
@@ -106,8 +106,8 @@
 
 
       <TextField fx:id="updateTextField" layoutX="65.0" layoutY="14.0" prefWidth="200.0" promptText="替换内容" />
-      <Button layoutX="300.0" layoutY="14.0"   mnemonicParsing="false"  text="替换" />
-      <Button layoutX="400.0" layoutY="14.0" mnemonicParsing="false"  text="替换全部" />
+      <Button layoutX="300.0" layoutY="14.0"   mnemonicParsing="false"  text="替换"  onAction="#replace"/>
+      <Button layoutX="400.0" layoutY="14.0" mnemonicParsing="false"  text="替换全部" onAction="#replaceAll" />
 
     </children>
   </AnchorPane>
