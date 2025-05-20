@@ -31,7 +31,7 @@ public class NotepadController {
     @FXML private Label characterCountLabel; // 状态栏中的字符数量标签
     @FXML private Label zoomLabel; // 状态栏中的缩放比例标签
     @FXML private HBox statusBar; // 底部状态栏
-    @FXML private MenuItem statusBarMenuItem; // “状态栏”菜单项
+    @FXML private CheckMenuItem statusBarMenuItem; // “状态栏”菜单项
     @FXML private MenuItem deleteMenuItem;//在控制器中引入该组件，方便后续设置禁用
     @FXML private AnchorPane findPanel;
     @FXML private TextField findTextField;//查找写入框
@@ -39,6 +39,8 @@ public class NotepadController {
     @FXML private TextField updateTextField;//替换写入框
     @FXML private CheckMenuItem caseSensitiveMenuItem;//查找区分大小写
     @FXML private CheckMenuItem wrapCheckMenuItem;//查找是否回绕
+    @FXML private CheckMenuItem wrapTextMenuItem;//是否自动换行
+
 
 
     private int lastFindIndex=-1;
@@ -54,6 +56,8 @@ public class NotepadController {
     // 初始化方法，在 FXML 加载完毕后自动调用
     @FXML
     private void initialize() {
+        updateZoomLabel();//初始化缩放
+        statusBarMenuItem.setSelected(statusBar.isVisible());
         // 设置按键和鼠标点击事件，用于更新状态栏内容
         textArea.setOnKeyReleased(this::updateStatus);
         textArea.setOnMouseClicked(e -> updateStatus(null));
@@ -61,6 +65,10 @@ public class NotepadController {
         //监听选中内容的变化
         textArea.selectedTextProperty().addListener((obs,oldText,newText)->{
             deleteMenuItem.setDisable(newText.isEmpty());
+        });
+        // 🔥 关键：监听文本变化，标记文件为已修改
+        textArea.textProperty().addListener((observable, oldValue, newValue) -> {
+            isModified = true;
         });
         //初始化时禁用“删除”菜单项
         deleteMenuItem.setDisable(true);
@@ -81,6 +89,14 @@ public class NotepadController {
         lineColumnLabel.setText("行 " + lineNum + ", 列 " + columnNum);
         characterCountLabel.setText(text.length() + " 个字符");
     }
+    private final double defaultFontSize = 15;
+
+    private void updateZoomLabel() {//更新缩放栏
+        double currentSize = textArea.getFont().getSize();
+        int percent = (int) ((currentSize / defaultFontSize) * 100);
+        zoomLabel.setText(percent + "%");
+    }
+
 
     @FXML private void newFile(ActionEvent event) {
         //如果文件被修改，提示用户保存
@@ -224,11 +240,35 @@ public class NotepadController {
     }
 
     @FXML
-    private void exitApp() {
+    private void exitApp() {//退出时确认是否保存未保存的内容
+        if (isModified) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("保存文件");
+            alert.setHeaderText(null);
+            alert.setContentText("文件已修改，是否保存？");
+
+            ButtonType saveButton = new ButtonType("是", ButtonBar.ButtonData.YES);
+            ButtonType dontSaveButton = new ButtonType("否", ButtonBar.ButtonData.NO);
+            ButtonType cancelButton = new ButtonType("取消", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+            alert.getButtonTypes().setAll(saveButton, dontSaveButton, cancelButton);
+            Optional<ButtonType> result = alert.showAndWait();
+
+            if (result.isPresent()) {
+                if (result.get() == saveButton) {
+                    saveFile();
+                } else if (result.get() == cancelButton) {
+                    return; // 不退出
+                }
+            }
+        }
+
+        // 关闭程序窗口
         Stage stage = (Stage) textArea.getScene().getWindow();
         stage.close();
     }
-//undo-
+
+    //undo-
     @FXML
     private void undo() {//就是Ctrl+Z
         textArea.undo();
@@ -527,6 +567,7 @@ public class NotepadController {
         double newSize = currentFont.getSize() + 2;  // 每次放大2个单位
         textArea.setFont(Font.font(currentFont.getFamily(), newSize));
         updateStatus(null);  // 更新状态栏，确保字符数等信息是最新的
+        updateZoomLabel();//更新状态栏的缩放比例
 
     }
 
@@ -538,6 +579,7 @@ public class NotepadController {
             textArea.setFont(Font.font(currentFont.getFamily(), newSize));
         }
         updateStatus(null);  // 更新状态栏，确保字符数等信息是最新的
+        updateZoomLabel();//更新状态栏的缩放比例
 
     }
 
@@ -545,9 +587,10 @@ public class NotepadController {
     private void resetZoom() {
         // 设置为默认字体大小
         Font currentFont = textArea.getFont();
-        double defaultSize = 12;  // 你可以根据实际需求调整默认字体大小
+        double defaultSize = 15;  // 你可以根据实际需求调整默认字体大小
         textArea.setFont(Font.font(currentFont.getFamily(), defaultSize));
         updateStatus(null);  // 更新状态栏，确保字符数等信息是最新的
+        updateZoomLabel();//更新状态栏的缩放比例
 
     }
 
@@ -620,6 +663,22 @@ public class NotepadController {
         }
 
     }
+
+    @FXML
+    private  void toggleWrapText(){
+        textArea.setWrapText(wrapTextMenuItem.isSelected());
+
+    }
+
+    @FXML
+    private void showAboutDialog() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("关于");
+        alert.setHeaderText("记事本程序");
+        alert.setContentText("作者：wdq\n版本：1.0.0\n\n欢迎下一次使用");
+        alert.showAndWait();
+    }
+
 
 
 
