@@ -61,7 +61,15 @@
                 <MenuItem mnemonicParsing="false" onAction="#resetZoom" text="恢复默认缩放" />
               </items>
             </Menu>
-            <MenuItem fx:id="statusBarMenuItem" mnemonicParsing="false" onAction="#toggleStatusBar" text="状态栏" />
+            <CheckMenuItem fx:id="statusBarMenuItem" mnemonicParsing="false" onAction="#toggleStatusBar" text="状态栏" />
+
+            <CheckMenuItem fx:id="wrapTextMenuItem" mnemonicParsing="false" onAction="#toggleWrapText" text="自动换行" />
+
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="帮助">
+          <items>
+            <MenuItem mnemonicParsing="false" onAction="#showAboutDialog" text="关于" />
           </items>
         </Menu>
       </menus>

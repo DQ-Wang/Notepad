@@ -29,3 +29,7 @@
 4.完成状态栏在`findNext()`&`findPrevious()`的更新：调用`updateStatus(null)`
 
 5.`zoomIn()`&`zoomOut()`&后序所有功能（插入日期，改变字体，显示状态栏）
+
+# 5.20
+
+1.在` initialize()`实现了对文本修改的监听，状态栏缩放比例的更新
